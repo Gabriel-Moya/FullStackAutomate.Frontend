@@ -105,8 +105,10 @@ jobs:
     - name: Deploy to S3
       env:
         BUCKET_NAME: ${{ needs.outputs.outputs.frontend_bucket }}
+        BUCKET_NAME_STEPS: ${{ steps.outputs.outputs.frontend_bucket }}
       run: |
-        echo "frontend_bucket=$BUCKET_NAME" >> $GITHUB_ENV
         echo "BUCKET_NAME: Deploying to S3 bucket $BUCKET_NAME"
+        echo "BUCKET_NAME_STEPS: Deploying to S3 bucket $BUCKET_NAME_STEPS"
         echo "Env.: Deploying to S3 bucket ${{ env.frontend_bucket }}"
+        echo "frontend_bucket=$BUCKET_NAME" >> $GITHUB_ENV
         aws s3 sync dist/ s3://${{ env.frontend_bucket }} --delete
