@@ -91,8 +91,10 @@ jobs:
       id: apply
       shell: bash
       if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-      run: terraform apply -auto-approve
+      run: |
+        terraform apply -auto-approve
+        echo "::set-output name=frontend_bucket::$(terraform output frontend_bucket)"
       working-directory: ./terraform
 
     - name: Deploy to S3
-      run: aws s3 sync dist/ s3://${{ steps.apply.outputs.frontend_bucket_arn }} --delete
+      run: aws s3 sync dist/ s3://${{ steps.apply.outputs.frontend_bucket }} --delete
