@@ -39,6 +39,7 @@ jobs:
       uses: hashicorp/setup-terraform@v1
       with:
         terraform_version: 1.6.6
+        terraform_wrapper: false
 
     - name: Terraform format
       id: fmt
@@ -98,15 +99,15 @@ jobs:
     - name: Terraform define outputs
       id: outputs
       run: |
-        BUCKET_NAME=$(terraform output frontend_bucket | tr -d '"')
-        echo "BUCKET_NAME: $BUCKET_NAME"
-        echo "frontend_bucket=$BUCKET_NAME" >> $GITHUB_OUTPUT
+        BUCKET_NAME=$(terraform output frontend_bucket)
+        echo "frontend_bucket=$BUCKET_NAME" >> $GITHUB_ENV
       working-directory: ./terraform
 
     - name: Deploy to S3
       env:
         BUCKET_NAME: ${{ needs.outputs.outputs.frontend_bucket }}
         BUCKET_NAME_STEPS: ${{ steps.outputs.outputs.frontend_bucket }}
+        frontend_bucket: ${{ steps.outputs.outputs.frontend_bucket }}
       run: |
         echo "BUCKET_NAME: Deploying to S3 bucket $BUCKET_NAME"
         echo "BUCKET_NAME_STEPS: Deploying to S3 bucket $BUCKET_NAME_STEPS"
