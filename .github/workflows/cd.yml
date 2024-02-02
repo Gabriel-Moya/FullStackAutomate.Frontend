@@ -100,7 +100,7 @@ jobs:
       run: |
         BUCKET_NAME=$(terraform output frontend_bucket | tr -d '"')
         echo "BUCKET_NAME: $BUCKET_NAME"
-        echo "frontend_bucket=$BUCKET_NAME" >> $GITHUB_ENV
+        echo "frontend_bucket=$BUCKET_NAME" >> $GITHUB_OUTPUT
       working-directory: ./terraform
 
     - name: Deploy to S3
