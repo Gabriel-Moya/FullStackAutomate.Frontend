@@ -46,7 +46,7 @@ jobs:
 
     - name: Terraform Init
       id: init
-      run: terraform init -backend=true -backend-config="bucket=${{ secrets.BUCKET_FOR_REMOTE_STATE }}" -backend-config="key=${{ secrets.KEY_FOR_REMOTE_STATE }}" -backend-config="region=${{ secrets.REGION_FOR_REMOTE_STATE }} -backend-config="dynamodb_table=${{ secrets.DYNAMO_TABLE_FOR_REMOTE_STATE }}"
+      run: terraform init -backend=true -backend-config="bucket=${{ secrets.BUCKET_FOR_REMOTE_STATE }}" -backend-config="key=${{ secrets.KEY_FOR_REMOTE_STATE }}" -backend-config="region=${{ secrets.REGION_FOR_REMOTE_STATE }}" -backend-config="dynamodb_table=${{ secrets.DYNAMO_TABLE_FOR_REMOTE_STATE }}"
 
     - name: Terraform Validate
       id: validate
