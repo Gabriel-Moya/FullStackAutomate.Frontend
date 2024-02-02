@@ -95,4 +95,4 @@ jobs:
       working-directory: ./terraform
 
     - name: Deploy to S3
-      run: aws s3 sync dist/ s3://${{ steps.apply.outputs.frontend_bucket }} --delete
+      run: aws s3 sync dist/ s3://${{ steps.apply.outputs.frontend_bucket_arn }} --delete
