@@ -99,6 +99,7 @@ jobs:
       id: outputs
       run: |
         BUCKET_NAME=$(terraform output frontend_bucket | tr -d '"')
+        echo "BUCKET_NAME: $BUCKET_NAME"
         echo "frontend_bucket=$BUCKET_NAME" >> $GITHUB_ENV
       working-directory: ./terraform
 
