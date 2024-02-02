@@ -98,7 +98,8 @@ jobs:
     - name: Terraform define outputs
       id: outputs
       run: |
-        echo "frontend_bucket=$(terraform output -raw frontend_bucket)" >> $GITHUB_ENV
+        BUCKET_NAME=$(terraform output -raw frontend_bucket | tr -d '"')
+        echo "frontend_bucket=$BUCKET_NAME" >> $GITHUB_ENV
       working-directory: ./terraform
 
     - name: Deploy to S3
