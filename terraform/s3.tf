@@ -13,10 +13,10 @@ resource "aws_s3_bucket_policy" "bucket_frontend_policy" {
     Version = "2024-02-03",
     Statement = [
       {
-        Effect = "Allow",
+        Effect    = "Allow",
         Principal = "*",
-        Action = "s3:GetObject",
-        Resource = "${aws_s3_bucket.bucket_frontend.arn}/*",
+        Action    = "s3:GetObject",
+        Resource  = "${aws_s3_bucket.bucket_frontend.arn}/*",
       },
     ],
   })
