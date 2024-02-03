@@ -7,7 +7,7 @@ data "aws_iam_policy_document" "this" {
       identifiers = ["*"]
     }
 
-    actions   = ["s3:GetObject"]
+    actions = ["s3:GetObject"]
     resources = [
       aws_s3_bucket.bucket_frontend.arn,
       "${aws_s3_bucket.bucket_frontend.arn}/*"
