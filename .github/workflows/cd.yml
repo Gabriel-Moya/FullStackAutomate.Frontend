@@ -100,18 +100,12 @@ jobs:
       id: outputs
       run: |
         BUCKET_NAME=$(terraform output frontend_bucket)
-        echo "frontend_bucket=$BUCKET_NAME" >> $GITHUB_OUTPUT
+        echo "FRONTEND_BUCKET=$BUCKET_NAME" >> $GITHUB_OUTPUT
       shell: bash
       working-directory: ./terraform
 
     - name: Deploy to S3
       env:
-        BUCKET_NAME: ${{ needs.outputs.outputs.frontend_bucket }}
-        BUCKET_NAME_STEPS: ${{ steps.outputs.outputs.frontend_bucket }}
-        frontend_bucket: ${{ steps.outputs.outputs.frontend_bucket }}
+        FRONTEND_BUCKET: ${{ steps.outputs.outputs.FRONTEND_BUCKET }}
       run: |
-        echo "BUCKET_NAME: Deploying to S3 bucket $BUCKET_NAME"
-        echo "BUCKET_NAME_STEPS: Deploying to S3 bucket $BUCKET_NAME_STEPS"
-        echo "Env.: Deploying to S3 bucket ${{ env.frontend_bucket }}"
-        echo "frontend_bucket=$BUCKET_NAME" >> $GITHUB_ENV
-        aws s3 sync dist/ s3://${{ env.frontend_bucket }} --delete
+        aws s3 sync dist/ s3://${{ env.FRONTEND_BUCKET }} --delete
