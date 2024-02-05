@@ -51,7 +51,7 @@ export default {
 
   data () {
     return {
-      title: ''
+      title: 'temp title'
     }
   },
 
