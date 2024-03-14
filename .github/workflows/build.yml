@@ -37,6 +37,7 @@ jobs:
       run: npm run generate
 
     - name: Archive production artifacts
+      if: github.event_name == 'push'
       uses: actions/upload-artifact@v2
       with:
         name: production-artifacts
