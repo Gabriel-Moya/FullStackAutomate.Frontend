@@ -49,7 +49,7 @@
 export default {
   name: 'NuxtTutorial',
 
-  data () {
+  data ( {
     return {
       title: 'temp title'
     }
