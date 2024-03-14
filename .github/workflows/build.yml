@@ -1,0 +1,63 @@
+name: Build project and test multiple jobs
+
+on:
+  pull_request:
+    branches:
+      - main
+      - staging
+      - development
+  push:
+    branches:
+      - main
+      - staging
+      - development
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+
+    - name: Setup Node.js environment
+      uses: actions/setup-node@v1
+      with:
+        node-version: 18.16.1
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Build
+      run: npm run build
+
+    - name: Generate static files
+      run: npm run generate
+
+    - name: Archive production artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: production-artifacts
+        path: dist
+        retention-days: 1
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    if: github.event_name == 'push'
+
+    steps:
+    - name: Download production artifacts
+      uses: actions/download-artifact@v2
+      with:
+        name: production-artifacts
+        path: dist
+
+    - name: Deploy
+      run: |
+        echo "Deploying to production"
+        ls -la
+        echo "===================="
+        ls -la dist
+        echo "Deployed to production"
